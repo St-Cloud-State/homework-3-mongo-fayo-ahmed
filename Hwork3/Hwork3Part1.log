@@ -1,0 +1,275 @@
+Script started on 2025-04-15 22:00:37+00:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="122" LINES="11"]
+[0;32m@fayo-ahmed [0m➜ [1;34m/workspaces/homework-3-mongo-fayo-ahmed/Hwork3 [0;36m([1;31mmain[0;36m) [0m$ mongo
+MongoDB shell version v3.6.8
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("14790a31-189e-4ca1-a05e-16741978cc3a") }
+MongoDB server version: 3.6.8
+Server has startup warnings: 
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] 
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] 
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] 
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2025-04-15T20:22:20.407+0000 I CONTROL  [initandlisten] 
+> use loan_database[3G[Juse loan_database[20G
+switched to db loan_database
+> // --------------------------------------[3G[J// --------------------------------------[44G
+> // Hwork3Part1 Mongo Shell Script[3G[J// Hwork3Part1 Mongo Shell Script[36G
+> // --------------------------------------[3G[J// --------------------------------------[44G
+> [3G[J[3G
+> // 1. Insert a New Application for the Processing Scenario[3G[J// 1. Insert a New Application for the Processing Scenario[61G
+> db.applications.insertOne({[3G[Jdb.applications.insertOne({[30G
+...   application_number: 1000,[5G[J  application_number: 1000,[32G
+...   name: "Alice",[5G[J  name: "Alice",[21G
+...   zipcode: "55555",[5G[J  zipcode: "55555",[24G
+...   address: "123 Main St, Hometown, USA",[5G[J  address: "123 Main St, Hometown, USA",[45G
+...   status: "received",[5G[J  status: "received",[26G
+...   notes: [][5G[J  notes: [][16G
+... });[5G[J});[8G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("67fed727676b984cdfb39e8f")
+}
+> print("Inserted Application 1000 (Processing Scenario):");[3G[Jprint("Inserted Application 1000 (Processing Scenario):");[61G
+Inserted Application 1000 (Processing Scenario):
+> printjson(db.applications.findOne({ application_number: 1000 }));[3G[Jprintjson(db.applications.findOne({ application_number: 1000 }));[68G
+{
+	"_id" : ObjectId("67fed2156046b6cdff28cb4c"),
+	"application_number" : 1000,
+	"name" : "Fayo",
+	"zipcode" : "12345",
+	"address" : "123 Main St, Mytown, USA",
+	"status" : "processing",
+	"notes" : [
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:39:34.019Z")
+		},
+		{
+			"phase" : "rejection",
+			"message" : "Credit review failed: insufficient credit history.",
+			"timestamp" : ISODate("2025-04-15T21:39:34.096Z")
+		},
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:47:11.569Z")
+		},
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:59:12.917Z")
+		}
+	],
+	"loan_terms" : {
+		"notes" : [
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty"
+		]
+	},
+	"rejection_reason" : "Insufficient credit history"
+}
+> [3G[J[3G
+> // 2. Update Application 1000 to "processing" and add a processing note[3G[J// 2. Update Application 1000 to "processing" and add a processing note[74G
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_number: 1000 },[5G[J  { application_number: 1000 },[36G
+...   {[5G[J  {[8G
+...     $set: { status: "processing" },[5G[J    $set: { status: "processing" },[40G
+...     $push: {[5G[J    $push: {[17G
+...       notes: {[5G[J      notes: {[19G
+...         phase: "personal_details",[5G[J        phase: "personal_details",[39G
+...         task: "ID verification",[5G[J        task: "ID verification",[37G
+...         message: "ID verified successfully.",[5G[J        message: "ID verified successfully.",[50G
+...         timestamp: new Date()[5G[J        timestamp: new Date()[34G
+...       }[5G[J      }[12G
+...     }[5G[J    }[10G
+...   }[5G[J  }[8G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> print("\nAfter Processing Update, Application 1000:");[3G[Jprint("\nAfter Processing Update, Application 1000:");[57G
+
+After Processing Update, Application 1000:
+> printjson(db.applications.findOne({ application_number: 1000 }));[3G[Jprintjson(db.applications.findOne({ application_number: 1000 }));[68G
+{
+	"_id" : ObjectId("67fed2156046b6cdff28cb4c"),
+	"application_number" : 1000,
+	"name" : "Fayo",
+	"zipcode" : "12345",
+	"address" : "123 Main St, Mytown, USA",
+	"status" : "processing",
+	"notes" : [
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:39:34.019Z")
+		},
+		{
+			"phase" : "rejection",
+			"message" : "Credit review failed: insufficient credit history.",
+			"timestamp" : ISODate("2025-04-15T21:39:34.096Z")
+		},
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:47:11.569Z")
+		},
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T21:59:12.917Z")
+		},
+		{
+			"phase" : "personal_details",
+			"task" : "ID verification",
+			"message" : "ID verified successfully.",
+			"timestamp" : ISODate("2025-04-15T22:01:11.326Z")
+		}
+	],
+	"loan_terms" : {
+		"notes" : [
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty"
+		]
+	},
+	"rejection_reason" : "Insufficient credit history"
+}
+> [3G[J[3G
+> // 3. Insert a New Application for the Accepted Scenario[3G[J// 3. Insert a New Application for the Accepted Scenario[59G
+> db.applications.insertOne({[3G[Jdb.applications.insertOne({[30G
+...   application_number: 1001,[5G[J  application_number: 1001,[32G
+...   name: "Bob",[5G[J  name: "Bob",[19G
+...   zipcode: "67890",[5G[J  zipcode: "67890",[24G
+...   address: "456 Oak Ave, Somecity, USA",[5G[J  address: "456 Oak Ave, Somecity, USA",[45G
+...   status: "received",[5G[J  status: "received",[26G
+...   notes: [][5G[J  notes: [][16G
+... });[5G[J});[8G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("67fed727676b984cdfb39e90")
+}
+> print("\nInserted Application 1001 (Accepted Scenario):");[3G[Jprint("\nInserted Application 1001 (Accepted Scenario):");[61G
+
+Inserted Application 1001 (Accepted Scenario):
+> printjson(db.applications.findOne({ application_number: 1001 }));[3G[Jprintjson(db.applications.findOne({ application_number: 1001 }));[68G
+{
+	"_id" : ObjectId("67fed3df7c9888fc34240856"),
+	"application_number" : 1001,
+	"name" : "Bob",
+	"zipcode" : "67890",
+	"address" : "456 Oak Ave, Somecity, USA",
+	"status" : "accepted",
+	"notes" : [ ],
+	"loan_terms" : {
+		"notes" : [
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty",
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty"
+		]
+	}
+}
+> [3G[J[3G
+ccepted" and add multiple loan term notes
+db.appli> // 4. Update Application 1001 to "accepted" and add multiple loan term notes[3G[J// 4. Update Application 1001 to "accepted" and add multiple loan term notes[79G
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_number: 1001 },[5G[J  { application_number: 1001 },[36G
+...   {[5G[J  {[8G
+...     $set: { status: "accepted" },[5G[J    $set: { status: "accepted" },[38G
+...     $push: { "loan_terms.notes": { $each: [[5G[J    $push: { "loan_terms.notes": { $each: [[48G
+...       "Interest rate locked at 3.5%",[5G[J      "Interest rate locked at 3.5%",[42G
+...       "10-year term with no prepayment penalty"[5G[J      "10-year term with no prepayment penalty"[52G
+...     ] } }[5G[J    ] } }[14G
+...   }[5G[J  }[8G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> print("\nAfter Acceptance Update, Application 1001:");[3G[Jprint("\nAfter Acceptance Update, Application 1001:");[57G
+
+After Acceptance Update, Application 1001:
+> printjson(db.applications.findOne({ application_number: 1001 }));[3G[Jprintjson(db.applications.findOne({ application_number: 1001 }));[68G
+{
+	"_id" : ObjectId("67fed3df7c9888fc34240856"),
+	"application_number" : 1001,
+	"name" : "Bob",
+	"zipcode" : "67890",
+	"address" : "456 Oak Ave, Somecity, USA",
+	"status" : "accepted",
+	"notes" : [ ],
+	"loan_terms" : {
+		"notes" : [
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty",
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty",
+			"Interest rate locked at 3.5%",
+			"10-year term with no prepayment penalty"
+		]
+	}
+}
+> [3G[J[3G
+> // 5. Insert a New Application for the Rejected Scenario[3G[J// 5. Insert a New Application for the Rejected Scenario[59G
+> db.applications.insertOne({[3G[Jdb.applications.insertOne({[30G
+...   application_number: 1002,[5G[J  application_number: 1002,[32G
+...   name: "Charlie",[5G[J  name: "Charlie",[23G
+...   zipcode: "54321",[5G[J  zipcode: "54321",[24G
+...   address: "789 Pine Rd, Othertown, USA",[5G[J  address: "789 Pine Rd, Othertown, USA",[46G
+...   status: "received",[5G[J  status: "received",[26G
+...   notes: [][5G[J  notes: [][16G
+... });[5G[J});[8G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("67fed727676b984cdfb39e91")
+}
+> print("\nInserted Application 1002 (Rejected Scenario):");[3G[Jprint("\nInserted Application 1002 (Rejected Scenario):");[61G
+
+Inserted Application 1002 (Rejected Scenario):
+> printjson(db.applications.findOne({ application_number: 1002 }));[3G[Jprintjson(db.applications.findOne({ application_number: 1002 }));[68G
+{
+	"_id" : ObjectId("67fed3df7c9888fc34240857"),
+	"application_number" : 1002,
+	"name" : "Charlie",
+	"zipcode" : "54321",
+	"address" : "789 Pine Rd, Othertown, USA",
+	"status" : "rejected",
+	"notes" : [
+		{
+			"phase" : "rejection",
+			"message" : "Credit review failed: insufficient credit history.",
+			"timestamp" : ISODate("2025-04-15T21:47:11.746Z")
+		},
+		{
+			"phase" : "rejection",
+			"message" : "Credit review failed: insufficient credit history.",
+			"timestamp" : ISODate("2025-04-15T21:59:13.098Z")
+		}
+	],
+	"rejection_reason" : "Insufficient credit history"
+}
+> [3G[J[3G
+> // 6. Update Application 1002 to "rejected," add a rejection reason and a rejection note[3G[J// 6. Update Application 1002 to "rejected," add a rejection reason and a rejection note[91G
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_number: 1002 },[5G[J  { application_number: 1002 },[36G
+...   {[5G[J  {[8G
+...     $set: {[5G[J    $set: {[16G
+...       status: "rejected",[5G[J      status: "rejected",[30G
+...       rejection_reason: "Insufficient credit history"[5G[J      rejection_reason: "Insufficient credit history"[58G
+...     },[5G[J    },[11G
+...     $push: {[5G[J    $push: {[17G
+...       notes: {[5G[J      notes: {[19G
+...         phase: "rejection",[5G[J        phase: "rejection",[32G
+...         message: "Credit review failed: insufficient credit history.",[5G[J        message: "Credit review failed: insufficient credit history.",[75G
+...         timestamp: new Date()[5G[J        timestamp: new Date()[34G
+...       }[5G[J      }[12G
+...     }[5G[J    }[10G
+...   }[5G[J  }[8G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> pr

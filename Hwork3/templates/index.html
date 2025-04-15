@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loan Application Portal</title>
+</head>
+<body>
+  <h1>Acme Financial Corp Loan Application Portal</h1>
+
+  <!-- Section to accept a loan application -->
+  <div id="acceptApplication">
+    <h2>Submit a Loan Application</h2>
+    <!-- Enhanced: Added an input for full address -->
+    <input type="text" id="applicantName" placeholder="Applicant Name" required>
+    <input type="text" id="address" placeholder="Address" required>
+    <input type="text" id="zipcode" placeholder="Zip Code" required>
+    <button onclick="submitApplication()">Submit Application</button>
+  </div>
+
+  <hr>
+
+  <!-- Section to check the status of an application -->
+  <div id="checkStatus">
+    <h2>Check Application Status</h2>
+    <input type="number" id="appNumber" placeholder="Application Number" required>
+    <button onclick="checkStatus()">Check Status</button>
+    <div id="statusOutput">
+      <!-- Status result will be displayed here -->
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section to change the status of an application -->
+  <div id="changeStatus">
+    <h2>Change Application Status</h2>
+    <input type="number" id="changeAppNumber" placeholder="Application Number" required>
+    <select id="newStatus">
+      <option value="received">Received</option>
+      <option value="processing">Processing</option>
+      <option value="accepted">Accepted</option>
+      <option value="rejected">Rejected</option>
+    </select>
+    <button onclick="changeStatus()">Update Status</button>
+    <div id="changeStatusOutput">
+      <!-- Change status result will be displayed here -->
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Section to display all applications (for testing purposes) -->
+  <div id="allApplications">
+    <h2>All Applications</h2>
+    <button onclick="showAllApplications()">Show All Applications</button>
+    <div id="applicationList">
+      <!-- Application list will be displayed here dynamically -->
+    </div>
+  </div>
+
+  <!-- Reference the JavaScript file (adjust path if needed) -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
